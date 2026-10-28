@@ -1,0 +1,45 @@
+<!--
+  A FOREST OF REVERSALS: full story, seamless version, for a Divi Code module
+  (or a WordPress Custom HTML block). Files are hosted at
+  https://plf-comms.github.io/forest-of-reversals/
+-->
+<!-- Skip these 3 font lines if your theme already loads Oswald, Special Elite and Work Sans -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Special+Elite&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+  .st-el { position: relative; margin: 0; padding: 0; }
+  iframe.st-embed { width: 100% !important; border: 0 !important; border-radius: 0 !important; padding: 0 !important; background: transparent !important; display: block !important; min-height: 0 !important; }
+  /* Backup heights in case the script can't run */
+  iframe[data-part="opening"], iframe[data-part="rule"], iframe[data-part="tongass"] { height: 100vh !important; height: 100svh !important; min-height: 560px !important; }
+  iframe[data-part="search"] { height: 100vh !important; height: 100svh !important; min-height: 620px !important; }
+  @media (max-width: 820px) { iframe[data-part="search"] { height: 1160px !important; } }
+  @media (max-width: 420px) { iframe[data-part="search"] { height: 1300px !important; } }
+  iframe[data-part="stats"] { height: 330px !important; }
+  iframe[data-part="where"] { height: 980px !important; }
+  @media (max-width: 800px) {
+    iframe[data-part="stats"] { height: 430px !important; }
+    iframe[data-part="where"] { height: 1400px !important; }
+  }
+</style>
+
+<!-- 1. Opening (pinned scroll video) -->
+<div class="st-el" id="opening"><iframe class="st-embed" data-part="opening" src="https://plf-comms.github.io/forest-of-reversals/sections/01-opening/index.html" title="A Forest of Reversals"></iframe></div>
+
+<!-- 2. By the numbers (sizes itself) -->
+<div class="st-el" id="by-the-numbers"><iframe class="st-embed" data-part="stats" loading="lazy" src="https://plf-comms.github.io/forest-of-reversals/sections/02-stats/index.html" title="By the numbers"></iframe></div>
+
+<!-- 3. Rule on. Rule off. (pinned chart) -->
+<div class="st-el" id="rule-on-rule-off"><iframe class="st-embed" data-part="rule" loading="lazy" src="https://plf-comms.github.io/forest-of-reversals/sections/03-rule-on-rule-off/index.html" title="Rule on. Rule off."></iframe></div>
+
+<!-- 4. Tongass (pinned chart) -->
+<div class="st-el" id="tongass"><iframe class="st-embed" data-part="tongass" loading="lazy" src="https://plf-comms.github.io/forest-of-reversals/sections/04-tongass/index.html" title="Tongass: On. Off. On."></iframe></div>
+
+<!-- 5. Search the record (pinned; cards slide sideways) -->
+<div class="st-el" id="search-the-record"><iframe class="st-embed" data-part="search" loading="lazy" src="https://plf-comms.github.io/forest-of-reversals/sections/05-search-the-record/index.html" title="Search the record"></iframe></div>
+
+<!-- 6. Where it stands (sizes itself) -->
+<div class="st-el" id="where-it-stands"><iframe class="st-embed" data-part="where" loading="lazy" src="https://plf-comms.github.io/forest-of-reversals/sections/06-where-it-stands/index.html" title="Where it stands"></iframe></div>
+
+<!-- Required: pins the scroll sections. Upload forest-embed.js into the same folder as sections/ -->
+<script src="https://plf-comms.github.io/forest-of-reversals/forest-embed.js" defer></script>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>By the numbers · A Forest of Reversals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Special+Elite&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#202B29;--fg:#FDF8F0;--mut:rgba(253,248,240,.72);--line:rgba(253,248,240,.22);--red:#E64324}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:'Work Sans','Helvetica Neue',Arial,sans-serif}
+/* Same column as the charts and the timeline: max 1040px wide, 20px side margins (16px on phones) */
+.wrap{max-width:1040px;margin:0 auto;padding:clamp(36px,6vw,64px) 20px}
+.stats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,4vw,48px)}
+.stat{border-top:3px solid var(--red);padding-top:16px;min-width:0}
+.n{display:block;font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;font-size:clamp(56px,7.4vw,84px);line-height:.9;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.l{display:block;font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(16px,1.8vw,20px);line-height:1.15;margin:10px 0 10px}
+.d{display:block;font-family:'Special Elite','Courier New',monospace;font-size:14px;line-height:1.45;color:var(--mut)}
+@media (max-width:640px){
+  .wrap{padding:28px 16px}
+  .stats{grid-template-columns:1fr;gap:22px}
+  .stat{display:grid;grid-template-columns:auto 1fr;column-gap:16px;align-items:baseline;padding-top:12px}
+  .n{font-size:52px;grid-row:1/3}
+  .l{margin:0 0 4px;font-size:17px}
+  .d{font-size:13px}
+}
+</style></head><body>
+<div class="wrap">
+  <ul class="stats">
+    <li class="stat"><span class="n">58.5</span><span class="l">Million acres</span><span class="d">of inventoried roadless areas in national forests covered by the 2001 rule</span></li>
+    <li class="stat"><span class="n">0</span><span class="l">Acts of Congress</span><span class="d">The rule was written, rewritten and reinstated by agencies and courts</span></li>
+    <li class="stat"><span class="n">34</span><span class="l">Reversals</span><span class="d">court rulings, agency rules and executive actions, 1998–2026</span></li>
+  </ul>
+</div>
+<script>
+/* Tell the page how tall this section is, so it fits without a scroll bar */
+(function(){var last=0;function send(){var h=Math.ceil(document.documentElement.getBoundingClientRect().height);if(Math.abs(h-last)<2)return;last=h;try{parent.postMessage({plf:'plf-height',h:h},'*')}catch(e){}}
+if(window.self!==window.top){send();window.addEventListener('load',send);window.addEventListener('resize',function(){last=0;send()});if(window.ResizeObserver)new ResizeObserver(send).observe(document.documentElement);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(send)}})();
+</script>
+</body></html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A FOREST OF REVERSALS</title>
+<meta name="description" content="Same forests. Shifting rules.">
+<meta property="og:title" content="A FOREST OF REVERSALS">
+<meta property="og:description" content="Same forests. Shifting rules.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Special+Elite&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+  /* Page shell (replaces scrollytelling.ai's page) */
+  html, body { margin: 0; padding: 0; background: #FDF8F0; }
+  body, p, li { font-family: "Work Sans", "Helvetica Neue", Arial, sans-serif; }
+  .st-el { position: relative; margin: 0; padding: 0; }
+
+  /* ---------- Embeds on this page, top to bottom ----------
+     opening ... sections/01-opening/            (pinned while you scroll)
+     stats ..... sections/02-stats/              (sized to fit)
+     rule ...... sections/03-rule-on-rule-off/   (pinned while you scroll)
+     tongass ... sections/04-tongass/            (pinned while you scroll)
+     search .... sections/05-search-the-record/  (pinned; cards slide sideways)
+     where ..... sections/06-where-it-stands/    (sized to fit)              */
+  iframe.st-embed { width: 100% !important; border: 0 !important; border-radius: 0 !important; padding: 0 !important; background: transparent !important; display: block !important; min-height: 0 !important; }
+
+  /* Backup heights in case the script below can't run */
+  iframe[data-part="opening"], iframe[data-part="rule"], iframe[data-part="tongass"] { height: 100vh !important; height: 100svh !important; min-height: 560px !important; }
+  iframe[data-part="search"] { height: 100vh !important; height: 100svh !important; min-height: 620px !important; }
+  @media (max-width: 820px) { iframe[data-part="search"] { height: 1160px !important; } }
+  @media (max-width: 420px) { iframe[data-part="search"] { height: 1300px !important; } }
+  iframe[data-part="stats"] { height: 330px !important; }
+  iframe[data-part="where"] { height: 980px !important; }
+  @media (max-width: 800px) {
+    iframe[data-part="stats"] { height: 430px !important; }
+    iframe[data-part="where"] { height: 1400px !important; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="st-el" id="opening"><iframe class="st-embed" data-part="opening" src="sections/01-opening/index.html" title="A Forest of Reversals"></iframe></div>
+  <div class="st-el" id="by-the-numbers"><iframe class="st-embed" data-part="stats" src="sections/02-stats/index.html" title="By the numbers"></iframe></div>
+  <div class="st-el" id="rule-on-rule-off"><iframe class="st-embed" data-part="rule" src="sections/03-rule-on-rule-off/index.html" title="Rule on. Rule off."></iframe></div>
+  <div class="st-el" id="tongass"><iframe class="st-embed" data-part="tongass" src="sections/04-tongass/index.html" title="Tongass: On. Off. On."></iframe></div>
+  <div class="st-el" id="search-the-record"><iframe class="st-embed" data-part="search" src="sections/05-search-the-record/index.html" title="Search the record"></iframe></div>
+  <div class="st-el" id="where-it-stands"><iframe class="st-embed" data-part="where" src="sections/06-where-it-stands/index.html" title="Where it stands"></iframe></div>
+</main>
+<script>
+/* Pinned embeds (opening video, the two forest charts, and Search the record):
+   each one stays pinned to the top of the screen while the reader scrolls past it,
+   and this script tells it how far they have scrolled. Same protocol as the
+   scrollytelling.ai head code. */
+(function () {
+  var charts = [];
+  function find(win) { for (var i = 0; i < charts.length; i++) { if (charts[i].contentWindow === win) return charts[i]; } var f = document.querySelectorAll('iframe'); for (var j = 0; j < f.length; j++) { if (f[j].contentWindow === win) return f[j]; } return null; }
+  function size(f) {
+    var w = f.parentElement;
+    if (typeof f._len === 'number') w.style.setProperty('height', (window.innerHeight + Math.round(f._len)) + 'px', 'important');
+    else w.style.setProperty('height', '230vh', 'important');
+  }
+  function setup(f, d) {
+    if (typeof d.len === 'number') f._len = d.len;
+    if (!f.dataset.plfForest) {
+      f.dataset.plfForest = '1';
+      var w = f.parentElement;
+      w.style.setProperty('position', 'relative', 'important');
+      f.style.setProperty('position', 'sticky', 'important');
+      f.style.setProperty('top', '0', 'important');
+      f.style.setProperty('height', '100vh', 'important');
+      f.style.setProperty('height', '100svh', 'important');
+      f.style.setProperty('min-height', '0', 'important');
+      charts.push(f);
+    }
+    size(f); f._p = undefined;
+    var vh = window.innerHeight, r = f.parentElement.getBoundingClientRect(), span = r.height - vh;
+    f._p = span > 0 ? Math.max(0, Math.min(1, -r.top / span)) : 0;
+    f.contentWindow.postMessage({ plf: 'forest', p: f._p }, '*');
+  }
+  function resize(f, d) {
+    var w = f.parentElement, vh = window.innerHeight, r = w.getBoundingClientRect(), inside = r.top < 0 && r.bottom > vh;
+    var p = r.height > vh ? Math.max(0, Math.min(1, -r.top / (r.height - vh))) : 0, absTop = window.pageYOffset + r.top;
+    f._len = d.len; size(f);
+    if (inside) { var nh = w.getBoundingClientRect().height; window.scrollTo(0, absTop + (d.reset ? 0 : p) * Math.max(0, nh - vh)); }
+    f._p = undefined; send();
+  }
+  window.addEventListener('message', function (e) {
+    var d = e.data; if (!d || typeof d.plf !== 'string') return;
+    var f = find(e.source); if (!f) return;
+    if (d.plf === 'plf-height' && typeof d.h === 'number' && !f.dataset.plfForest) {
+      f.style.setProperty('height', Math.ceil(d.h) + 'px', 'important');
+      f.style.setProperty('min-height', '0', 'important');
+      var pw = f.parentElement; if (pw) { pw.style.setProperty('height', 'auto', 'important'); pw.style.setProperty('min-height', '0', 'important'); }
+      q(); return;
+    }
+    if (d.plf === 'forest-hello') setup(f, d);
+    else if (!f.dataset.plfForest) return;
+    else if (d.plf === 'forest-size' && typeof d.len === 'number') resize(f, d);
+    else if (d.plf === 'forest-scroll' && typeof d.dy === 'number') window.scrollBy({ top: d.dy, behavior: d.smooth ? 'smooth' : 'auto' });
+    else if (d.plf === 'forest-skip') skip(f);
+  });
+  /* "Skip to where it stands" */
+  function skip(f) {
+    var target = document.getElementById('where-it-stands');
+    var w = f.parentElement, wEnd = w.getBoundingClientRect().bottom + window.pageYOffset;
+    var y = target ? target.getBoundingClientRect().top + window.pageYOffset : wEnd;
+    if (y < wEnd) y = wEnd;
+    window.scrollTo({ top: Math.max(0, y), behavior: 'auto' });
+  }
+  var queued = false;
+  function send() {
+    queued = false;
+    var vh = window.innerHeight;
+    charts.forEach(function (f) {
+      var r = f.parentElement.getBoundingClientRect(), span = r.height - vh;
+      if (r.bottom < -vh || r.top > 2 * vh) return;
+      var p = span > 0 ? Math.max(0, Math.min(1, -r.top / span)) : 1;
+      if (f._p !== undefined && Math.abs(f._p - p) < 0.00002) return;
+      f._p = p; f.contentWindow.postMessage({ plf: 'forest', p: p }, '*');
+    });
+  }
+  function q() { if (!queued) { queued = true; requestAnimationFrame(send); } }
+  window.addEventListener('scroll', q, { passive: true });
+  window.addEventListener('resize', function () { charts.forEach(size); q(); });
+})();
+</script>
+</body>
+</html>

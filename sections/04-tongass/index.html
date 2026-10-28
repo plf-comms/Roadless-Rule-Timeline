@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tongass: On. Off. On. · A Forest of Reversals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Special+Elite&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#202B29;--fg:#FDF8F0;--fg2:rgba(253,248,240,.72);--line:rgba(253,248,240,.2);--blk:#E64324;--part:#F5C000;--parttx:#F5C000;--go:#2BC255;--dotc:#FDF8F0;--stripe:#FDF8F0}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:'Work Sans','Helvetica Neue',Arial,sans-serif;scrollbar-width:none}
+html::-webkit-scrollbar{display:none}
+.track{position:relative;height:230vh}
+.stage{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden}
+html.framed,html.framed body{height:100%;overflow:hidden}
+html.framed .track{height:100%}
+html.framed .stage{position:relative;height:100%}
+.wrap{width:100%;max-width:1040px;margin:0 auto;padding:20px}
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 24px}
+h2{font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(28px,4vw,40px);line-height:1;margin:0;letter-spacing:.01em}
+.deck{font-family:'Special Elite','Courier New',monospace;font-size:15px;margin:6px 0 0}
+.now{text-align:right;min-width:200px}
+.now .yr{font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;font-size:42px;line-height:1;font-variant-numeric:tabular-nums}
+.now .st{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--fg2);margin-top:4px;min-height:1.2em}
+.now .st.on{color:var(--blk)}.now .st.off{color:var(--go)}.now .st.part{color:var(--parttx)}
+.plot{position:relative;margin-top:14px;touch-action:pan-y}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.ground{stroke:var(--fg);stroke-width:1.5}
+.guide{stroke:var(--line);stroke-width:1}
+.ylab{font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;letter-spacing:.06em}
+.ylab.on{fill:var(--blk)}.ylab.part{fill:var(--parttx)}.ylab.off{fill:var(--go)}
+.xlab{fill:var(--fg2);font-family:'Work Sans',Arial,sans-serif}
+.on .tp{fill:var(--blk)}.part .tp{fill:var(--part)}.tst{fill:var(--stripe)}
+.repeal .tp{fill:var(--bg);stroke:var(--blk);stroke-width:2;vector-effect:non-scaling-stroke}.repeal .tst{fill:var(--blk);opacity:.35}
+.stp{fill:var(--go)}.dot{fill:var(--dotc)}
+.hit{fill:transparent}
+.tip{position:absolute;pointer-events:none;background:#FDF8F0;color:#090C0B;font-size:13px;line-height:1.45;padding:9px 11px;border-radius:2px;width:max-content;max-width:270px;transform:translate(-50%,-100%);opacity:0;transition:opacity .15s;z-index:3}
+.tip b{font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;font-size:17px;letter-spacing:.02em;display:block}
+.tip .k{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.8;display:block;margin-bottom:3px}
+.tip.show{opacity:1}
+.count{font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.02em;margin:14px 0 0}
+.count span{color:var(--blk)}
+.key{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;padding:0;margin:12px 0 0;font-size:13px}
+.key li{display:flex;align-items:center;gap:8px}
+.key svg{width:22px;height:22px;flex:none}
+.foot{font-size:12px;color:var(--fg2);line-height:1.5;border-top:1px solid var(--line);padding-top:10px;margin:12px 0 0}
+.cue{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:11px 18px;border-radius:999px;background:#FDF8F0;color:#090C0B;font-family:'Special Elite','Courier New',monospace;font-size:18px;line-height:1;white-space:nowrap;pointer-events:none;transition:opacity .4s ease;z-index:4}
+.cue b{font-family:'Work Sans',Arial,sans-serif;font-weight:700;font-size:20px;display:inline-block;animation:bob 1.6s ease-in-out infinite}
+.cue.off{opacity:0}
+@keyframes bob{0%,100%{transform:translateY(-2px)}50%{transform:translateY(4px)}}
+@media (prefers-reduced-motion:reduce){.cue b{animation:none}}
+@media (max-width:640px){.cue{bottom:14px;font-size:15px;padding:9px 14px}}
+@media (max-width:640px){.wrap{padding:16px}.now{min-width:0;text-align:left}.now .yr{font-size:32px}.count{font-size:16px}.key{gap:5px 14px;font-size:12px}.foot{font-size:11px}}
+</style></head><body>
+<div class="track"><div class="stage"><div class="wrap">
+  <div class="top">
+    <div><h2>Tongass: On. Off. On.</h2><p class="deck">The same rule on America’s largest national forest. Each marker is one year.</p></div>
+    <div class="now" aria-hidden="true"><div class="yr">2001</div><div class="st"></div></div>
+  </div>
+  <div class="plot"></div>
+  <p class="count">Switched on or off <span>7 times</span> since 2001</p>
+  <ul class="key" aria-label="Key"><li><svg viewBox="0 0 22 22"><path d="M8,1 L14,1 L18.5,5.5 L18.5,11.5 L14,16 L8,16 L3.5,11.5 L3.5,5.5 Z" fill="#E64324"/><rect x="10" y="16" width="2" height="6" fill="#E64324"/></svg>On: rule in effect, roadbuilding stopped</li><li><svg viewBox="0 0 22 22"><rect x="1" y="14.5" width="20" height="4" fill="#2BC255"/><rect x="1" y="11" width="2" height="11" fill="#2BC255"/><rect x="19" y="11" width="2" height="11" fill="#2BC255"/></svg>Off: blocked by a court, or the Tongass exempted</li><li><svg viewBox="0 0 22 22"><path d="M8,1 L14,1 L18.5,5.5 L18.5,11.5 L14,16 L8,16 L3.5,11.5 L3.5,5.5 Z" fill="none" stroke="#E64324" stroke-width="1.5"/><rect x="10" y="16" width="2" height="6" fill="#E64324"/></svg>On, repeal proposed</li><li><svg viewBox="0 0 22 22"><circle cx="11" cy="17" r="3.4" fill="#FDF8F0"/></svg>Switched that year</li></ul>
+  <p class="foot">Each marker shows the rule’s status on the Tongass National Forest for most of that year; a dot marks a year in which it switched (twice in 2014). Hover over or tap a marker to see what happened that year. Source: Roadless Rule timeline, 1998–2026. As of Oct. 2026.</p>
+</div><p class="cue" aria-hidden="true">Scroll down <b>↓</b></p></div></div>
+<script>
+var YEARS=[{"y": 2001, "k": "off", "ev": ["Jan. 12: Roadless Rule published", "May 10: Idaho federal court blocks it"], "sw": 0}, {"y": 2002, "k": "off", "ev": ["Dec. 12: Ninth Circuit reinstates it"], "sw": 1}, {"y": 2003, "k": "on", "ev": ["July 14: Wyoming federal court blocks it", "Dec. 30: Tongass exemption published"], "sw": 1}, {"y": 2004, "k": "off", "ev": ["Jan. 29: Tongass exemption takes effect"], "sw": 0}, {"y": 2005, "k": "off", "ev": [], "sw": 0}, {"y": 2006, "k": "off", "ev": [], "sw": 0}, {"y": 2007, "k": "off", "ev": [], "sw": 0}, {"y": 2008, "k": "off", "ev": [], "sw": 0}, {"y": 2009, "k": "off", "ev": [], "sw": 0}, {"y": 2010, "k": "off", "ev": [], "sw": 0}, {"y": 2011, "k": "on", "ev": ["March 4: Alaska federal court strikes down the exemption"], "sw": 1}, {"y": 2012, "k": "on", "ev": [], "sw": 0}, {"y": 2013, "k": "on", "ev": [], "sw": 0}, {"y": 2014, "k": "on", "ev": ["March 26: Ninth Circuit panel revives the exemption", "Aug. 29: full Ninth Circuit agrees to rehear; exemption set aside"], "sw": 2}, {"y": 2015, "k": "on", "ev": ["July 29: full Ninth Circuit strikes down the 2003 exemption"], "sw": 0}, {"y": 2016, "k": "on", "ev": [], "sw": 0}, {"y": 2017, "k": "on", "ev": [], "sw": 0}, {"y": 2018, "k": "on", "ev": ["Aug. 2: Alaska and USDA agree to write an Alaska rule"], "sw": 0}, {"y": 2019, "k": "on", "ev": [], "sw": 0}, {"y": 2020, "k": "on", "ev": ["Oct. 29: USDA finalizes a new Tongass exemption"], "sw": 1}, {"y": 2021, "k": "off", "ev": [], "sw": 0}, {"y": 2022, "k": "off", "ev": [], "sw": 0}, {"y": 2023, "k": "on", "ev": ["Jan. 27: USDA restores the rule on the Tongass"], "sw": 1}, {"y": 2024, "k": "on", "ev": [], "sw": 0}, {"y": 2025, "k": "repeal", "ev": ["Jan. 20: executive order directs USDA to restore the 2020 exemption", "June 23: USDA announces plan to repeal the national rule"], "sw": 0}, {"y": 2026, "k": "repeal", "ev": ["Aug. 20: repeal formally proposed"], "sw": 0}],HASPART=false;
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+  var HF={on:1,repeal:1,part:.6,off:0};
+  var LBL={on:'In effect',repeal:'In effect · repeal proposed',part:'Partly in effect',off:'Not in effect'};
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var plot=document.querySelector('.plot'),yr=document.querySelector('.now .yr'),stt=document.querySelector('.now .st');
+  var tip=document.createElement('div');tip.className='tip';plot.appendChild(tip);
+  var cue=document.querySelector('.cue');
+  var nodes=[],svg,ROWS,PER,N=YEARS.length;
+  var target=reduce?1:0,cur=target,shown=-2,running=false;
+
+  function build(){
+    var narrow=plot.clientWidth<640;ROWS=narrow?3:2;PER=Math.ceil(N/ROWS);
+    var W=1000,GUT=narrow?150:110,slot=(W-GUT)/PER,tw=slot*(narrow?.62:.56),th=tw*1.5,
+        rowH=th+(narrow?80:66),FS=narrow?32:20,YF=narrow?30:17,dr=narrow?7:5;
+    plot.innerHTML='';plot.appendChild(tip);nodes=[];
+    svg=el('svg',{viewBox:'0 0 '+W+' '+(rowH*ROWS+6),role:'img','aria-label':document.querySelector('h2').textContent+' Status of the Roadless Rule each year from 2001 to 2026.'},plot);
+    // solid stop sign centred on (0,0) at its base, drawn upward: a flat-topped octagon on a post
+    var rr=tw*.5,R0=rr/Math.cos(Math.PI/8),cy=-th+rr,pw=tw*.07,T='';
+    for(var q=0;q<8;q++){var an=Math.PI/8+q*Math.PI/4;T+=(q?' L':'M')+(R0*Math.cos(an)).toFixed(2)+','+(cy+R0*Math.sin(an)).toFixed(2)}
+    T+=' Z M'+(-pw)+','+(cy+rr-1)+' L'+pw+','+(cy+rr-1)+' L'+pw+',0 L'+(-pw)+',0 Z';
+    var S='';
+    for(var r=0;r<ROWS;r++){
+      var base=r*rowH+th+12,labs=[['ON',base-th,'on']];
+      if(HASPART)labs.push(['PARTLY',base-th*HF.part,'part']);labs.push(['OFF',base,'off']);
+      labs.forEach(function(l){
+        if(l[2]!=='off')el('line',{'class':'guide',x1:GUT-14,x2:W,y1:l[1],y2:l[1]},svg);
+        var t=el('text',{'class':'ylab '+l[2],x:GUT-22,y:l[1]+(l[2]==='off'?0:FS*.36),'text-anchor':'end','font-size':l[2]==='part'?FS*.8:FS},svg);t.textContent=l[0];
+      });
+      el('line',{'class':'ground',x1:GUT-14,x2:W,y1:base,y2:base},svg);
+      for(var j=0;j<PER;j++){
+        var i=r*PER+j;if(i>=N)break;var Y=YEARS[i],cx=GUT+j*slot+slot/2;
+        var g=el('g',{'class':Y.k},svg),tp=el('path',{'class':'tp',d:T},g);el('path',{'class':'tst',d:S},g);
+        var lh=narrow?14:9,sg=el('g',{},svg),sp=el('rect',{'class':'stp',x:-slot/2-.5,y:-lh/2,width:slot+1,height:lh},sg);
+        if(Y.k==='off'){var pv=YEARS[i-1],nx=YEARS[i+1],cap=narrow?30:20,cw=narrow?5:3.5;
+          if(!pv||pv.k!=='off'||j===0)el('rect',{'class':'stp',x:-slot/2,y:-cap/2,width:cw,height:cap},sg);
+          if(!nx||nx.k!=='off'||j===PER-1)el('rect',{'class':'stp',x:slot/2-cw,y:-cap/2,width:cw,height:cap},sg);}
+        var dot=Y.sw?el('circle',{'class':'dot',cx:cx,cy:base+(narrow?14:11),r:dr},svg):null;
+        if(Y.y===2001||Y.y%5===0){var t=el('text',{'class':'xlab',x:cx,y:base+(narrow?48:34),'text-anchor':'middle','font-size':YF},svg);t.textContent=Y.y}
+        nodes.push({g:g,sg:sg,dot:dot,Y:Y,cx:cx,base:base,row:r,m:1,tm:1,last:''});
+      }
+    }
+    var hit=el('rect',{'class':'hit',x:0,y:0,width:W,height:rowH*ROWS+6},svg);
+    hit.addEventListener('mousemove',function(e){point(e.clientX,e.clientY)});
+    hit.addEventListener('mouseleave',hide);
+    hit.addEventListener('touchstart',function(e){point(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
+    hit.addEventListener('touchmove',function(e){point(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
+    hit.addEventListener('touchend',function(){setTimeout(hide,1800)});
+    shown=-2;draw(true);
+  }
+  function ease(x){return 1-Math.pow(1-x,3)}
+  function draw(force){
+    var front=cur*(N+2.5),busy=false;
+    nodes.forEach(function(n,i){
+      var gr=ease(Math.max(0,Math.min(1,front-i)));
+      n.m+=(n.tm-n.m)*0.22;if(Math.abs(n.tm-n.m)<0.002)n.m=n.tm;else busy=true;
+      var k=n.Y.k,h=HF[k],sx=(k==='part'?h:1)*n.m*(k==='off'?0:Math.max(gr,0.001)),sy=h*gr*n.m;
+      var tr='translate('+n.cx.toFixed(2)+','+n.base+') scale('+Math.max(sx,0.0001).toFixed(4)+','+Math.max(sy,0.0001).toFixed(4)+')';
+      var ss=k==='off'?Math.min(1,gr*1.4):0,ts='translate('+n.cx.toFixed(2)+','+n.base+') scale('+Math.max(ss,0.0001).toFixed(4)+','+(ss>0?n.m:0.0001).toFixed(4)+')';
+      var key=tr+ts;if(force||key!==n.last){n.g.setAttribute('transform',tr);n.g.setAttribute('opacity',(k!=='off'&&gr>0.02)?1:0);n.sg.setAttribute('transform',ts);if(n.dot)n.dot.setAttribute('opacity',gr.toFixed(3));n.last=key}
+    });
+    var fi=Math.max(0,Math.min(N-1,Math.floor(front-1)));
+    if(cur<=0.002)fi=-1;
+    cue.classList.toggle('off',cur>0.9||reduce);
+    if(fi!==shown){shown=fi;if(fi<0){yr.textContent='2001';stt.textContent='';stt.className='st'}else{var Y=YEARS[fi];yr.textContent=Y.y;stt.textContent=LBL[Y.k];stt.className='st '+(Y.k==='repeal'?'on':Y.k)}}
+    return busy;
+  }
+  function loop(){
+    cur+=(target-cur)*0.16;var moving=Math.abs(target-cur)>0.0008;if(!moving)cur=target;
+    var busy=draw(false);
+    if(moving||busy)requestAnimationFrame(loop);else running=false;
+  }
+  function kick(){if(!running){running=true;requestAnimationFrame(loop)}}
+  function setTarget(p){target=reduce?1:Math.max(0,Math.min(1,p));kick()}
+  function point(x,y){
+    var r=svg.getBoundingClientRect(),pr=plot.getBoundingClientRect(),vb=svg.viewBox.baseVal,k=r.width/vb.width;
+    var row=Math.max(0,Math.min(ROWS-1,Math.floor((y-r.top)/(r.height/ROWS))));
+    var best=null,bd=1e9;nodes.forEach(function(n){if(n.row!==row)return;var d=Math.abs(r.left+n.cx*k-x);if(d<bd){bd=d;best=n}});
+    if(!best)return;var sl=(vb.width-(nodes[1]?0:0))/PER;
+    nodes.forEach(function(n){var d=n.row===row?(n.cx-best.cx)/((nodes[1].cx-nodes[0].cx)||1):99;n.tm=1+0.4*Math.exp(-d*d/2.2)});kick();
+    var Y=best.Y;tip.innerHTML='<b>'+Y.y+'</b><span class="k">'+LBL[Y.k]+' most of the year'+(Y.sw?' · switched '+(Y.sw>1?Y.sw+' times':'once'):'')+'</span>'+(Y.ev.length?Y.ev.join('<br>'):'No change this year');
+    var tx=r.left-pr.left+best.cx*k;tx=Math.max(135,Math.min(pr.width-135,tx));
+    tip.style.left=tx+'px';tip.style.top=(r.top-pr.top+row*(r.height/ROWS)+4)+'px';tip.classList.add('show');
+  }
+  function hide(){nodes.forEach(function(n){n.tm=1});kick();tip.classList.remove('show')}
+  build();
+  var wasNarrow=plot.clientWidth<640;
+  window.addEventListener('resize',function(){var n=plot.clientWidth<640;if(n!==wasNarrow){wasNarrow=n;build()}});
+
+  // ---- Scroll: how far the reader has scrolled past the chart (0 to 1) drives the growth ----
+  function map(p){return (p-0.06)/0.74}
+  var inFrame=false;try{inFrame=window.self!==window.top}catch(x){inFrame=true}
+  var track=document.querySelector('.track');
+  if(reduce){setTarget(1)}
+  else if(!inFrame){
+    // standalone page: the chart is sticky inside a tall track
+    var tick=function(){var r=track.getBoundingClientRect(),span=r.height-window.innerHeight;setTarget(map(span>0?-r.top/span:1))};
+    window.addEventListener('scroll',tick,{passive:true});window.addEventListener('resize',tick);tick();
+  }else{
+    // inside scrollytelling: the page's Head code pins this frame and sends the scroll position
+    document.documentElement.classList.add('framed');
+    var heard=false;
+    window.addEventListener('message',function(e){var d=e.data;if(d&&d.plf==='forest'&&typeof d.p==='number'){heard=true;setTarget(map(d.p))}});
+    var hello=function(){if(!heard){try{parent.postMessage({plf:'forest-hello'},'*')}catch(x){}}};
+    hello();var hi=setInterval(function(){if(heard){clearInterval(hi);return}hello()},700);
+    // fallback if the Head code is missing: grow as the chart scrolls into view
+    setTimeout(function(){if(heard||!('IntersectionObserver' in window))return;
+      var ths=[];for(var i=0;i<=40;i++)ths.push(i/40);
+      new IntersectionObserver(function(es){if(heard)return;var e=es[es.length-1];setTarget(e.intersectionRatio/0.85)},{threshold:ths}).observe(plot);
+    },1500);
+  }
+})();
+</script>
+</body></html>

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Search the record · A Forest of Reversals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Special+Elite&family=Work+Sans:wght@400;500;600&display=swap">
+<script>if(/[?&]full=1/.test(location.search))document.documentElement.classList.add("withfull")</script>
+<style>
+:root{--bg:#FDF8F0;--fg:#090C0B;--mut:#4C5451;--line:#E3D9C6;--ink:#090C0B;--ink2:#4C5451;--rule:#E3D9C6;--red:#E64324;--card:#FFFFFF;--hl:rgba(230,67,36,.18)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:'Work Sans','Helvetica Neue',Arial,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:36px 20px 24px}
+h2{font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(32px,5vw,52px);line-height:1;margin:0 0 8px;letter-spacing:.01em}
+.deck{font-family:'Special Elite','Courier New',monospace;font-size:clamp(17px,2vw,21px);line-height:1.3;margin:0 0 24px}
+.controls{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);min-width:0}
+input,select{font:inherit;font-size:16px;letter-spacing:0;text-transform:none;font-weight:400;color:var(--ink);background:#FFFFFF;border:1px solid #CFC4AE;border-radius:2px;padding:11px 12px;width:100%;min-width:0}
+input:focus,select:focus,button:focus-visible,a:focus-visible,.strip:focus-visible{outline:2px solid var(--red);outline-offset:1px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding:10px 0;border-bottom:2px solid var(--fg);font-size:14px}
+.count{font-weight:600;margin-right:auto}
+.bar button,.bar a{font:inherit;font-size:14px;font-weight:500;color:var(--fg);background:none;border:0;border-bottom:1px solid currentColor;padding:2px 0;cursor:pointer;text-decoration:none}
+.nav{display:flex;align-items:center;gap:12px;margin:16px 0 10px}
+.nav .hint{display:inline-flex;align-items:center;gap:12px;margin-right:auto;background:var(--red);color:#FFFFFF;font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase;padding:10px 18px 9px;border-radius:999px;line-height:1}
+.nav .hint i{font-style:normal;font-family:'Work Sans',Arial,sans-serif;font-size:22px;display:inline-block;animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(-2px)}50%{transform:translateX(6px)}}
+@media (prefers-reduced-motion:reduce){.nav .hint i{animation:none}}
+.nav button{width:50px;height:50px;border:0;background:var(--fg);border-radius:50%;font-family:'Work Sans',Arial,sans-serif;font-size:24px;font-weight:700;line-height:1;cursor:pointer;color:#FFFFFF;transition:background .2s,transform .15s}
+.nav button:hover:not(:disabled){background:var(--red);transform:scale(1.06)}
+.nav button:disabled{opacity:.2;cursor:default}
+.sw{position:relative}
+.sw::after{content:'';position:absolute;top:0;right:0;bottom:18px;width:90px;background:linear-gradient(to right,rgba(253,248,240,0),var(--bg));pointer-events:none;transition:opacity .3s}
+.sw.end::after{opacity:0}
+.prog{height:3px;background:var(--line);margin:0 0 14px;position:relative}
+.prog i{position:absolute;left:0;top:0;bottom:0;background:var(--red);width:0}
+.strip{display:flex;align-items:flex-start;gap:18px;overflow-x:auto;overflow-y:hidden;scroll-behavior:auto;scrollbar-width:none;padding:0 0 18px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.strip::-webkit-scrollbar{display:none}
+.yg{flex:none;display:flex;flex-direction:column}
+.yr span{position:sticky;left:14px;display:inline-block;padding-right:14px;background:var(--red)}
+.yr{background:var(--red);color:#fff;font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;font-size:22px;line-height:1;padding:8px 14px 7px;letter-spacing:.03em;margin:0 0 10px}
+.cards{display:flex;align-items:flex-start;gap:12px}
+.e{width:300px;flex:none;background:var(--card);color:var(--ink);border:1px solid var(--rule);padding:18px 18px 16px;display:flex;flex-direction:column}
+.dt{font-family:'Special Elite','Courier New',monospace;font-size:14px;margin:0 0 6px}
+.t{font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;font-size:20px;line-height:1.15;margin:0 0 8px}
+.b{font-size:14.5px;line-height:1.55;margin:0 0 12px}
+.meta{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);margin:0 0 10px}
+.src{border-top:1px solid var(--rule);padding-top:10px;font-size:12.5px;line-height:1.5;color:var(--ink2)}
+.src a{color:var(--ink);text-underline-offset:2px}
+.cp{margin-top:10px;font:inherit;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink);background:none;border:1px solid #CFC4AE;border-radius:2px;padding:5px 9px;cursor:pointer}
+.cp:hover{border-color:var(--ink)}
+mark{background:var(--hl);color:inherit;padding:0 1px}
+.none{padding:30px 0;font-size:15px;color:var(--fg)}
+.foot{font-size:12px;color:var(--mut);margin:6px 0 0;line-height:1.5}
+.footrow{display:flex;align-items:center;justify-content:space-between;gap:10px 20px;flex:none}
+.footrow .foot{margin:0;min-width:0}
+.skip{display:none;flex:none;align-items:center;gap:8px;background:#202B29;color:#FFFFFF;border:0;border-radius:999px;padding:9px 16px 8px;font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;font-size:15px;letter-spacing:.05em;text-transform:uppercase;line-height:1;cursor:pointer;transition:background .2s}
+.skip i{font-style:normal;font-family:'Work Sans',Arial,sans-serif;font-size:17px}
+.skip:hover{background:var(--red)}
+html.pinned.heard .skip{display:inline-flex}
+@media (max-width:820px){.controls{grid-template-columns:1fr 1fr}.controls label:first-child{grid-column:1/-1}}
+/* Full-screen layout on desktop and tablet: the section fills the screen and the cards fill the space left under the filters */
+@media (min-width:821px){
+  html,body{height:100%;overflow:hidden}
+  .wrap{height:100vh;height:100svh;display:flex;flex-direction:column;padding-top:clamp(18px,4vh,36px);padding-bottom:clamp(10px,2vh,20px)}
+  .sw{flex:1;min-height:0}
+  .strip{height:100%;padding-bottom:10px}
+  .yg{height:100%}
+  .cards{flex:1;min-height:0}
+  .e{width:330px;max-height:100%;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#CFC4AE transparent}
+  .footrow{flex:none}
+}
+@media (min-width:821px) and (max-height:820px){
+  h2{font-size:36px;margin-bottom:4px}.deck{font-size:16px;margin-bottom:12px}
+  .controls{margin-bottom:6px}input,select{padding:8px 10px;font-size:15px}
+  .bar{padding:6px 0}.nav{margin:10px 0 8px}.nav .hint{font-size:15px;padding:8px 14px 7px}.nav button{width:42px;height:42px;font-size:20px}
+  .prog{margin-bottom:10px}.yr{font-size:19px;padding:6px 12px 5px;margin-bottom:8px}
+  .e{padding:14px 15px 12px}.t{font-size:18px}.b{font-size:14px;margin-bottom:8px}
+}
+/* Pinned inside the page: the section fills the screen at every width, and scrolling the page moves the cards */
+html.pinned,html.pinned body{height:100%;overflow:hidden}
+html.pinned .wrap{height:100vh;height:100svh;display:flex;flex-direction:column;padding-top:clamp(14px,4vh,36px);padding-bottom:clamp(8px,2vh,20px)}
+html.pinned .sw{flex:1;min-height:0}
+html.pinned .strip{height:100%;padding-bottom:10px;overflow-x:hidden;touch-action:pan-y}
+html.pinned .yg{height:100%}
+html.pinned .cards{flex:1;min-height:0}
+html.pinned .e{max-height:100%;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#CFC4AE transparent}
+html.pinned .footrow{flex:none;margin-top:4px}
+.ftog{display:none}
+@media (max-width:820px){
+  html.pinned h2{font-size:30px;margin-bottom:4px}
+  html.pinned .deck{font-size:15px;margin-bottom:10px}
+  html.pinned .controls{display:none;margin:4px 0 2px;grid-template-columns:1fr 1fr;gap:8px}
+  html.pinned.fopen .controls{display:grid}
+  html.pinned .controls label{font-size:10.5px;gap:4px}
+  html.pinned .controls input,html.pinned .controls select{padding:7px 9px;font-size:16px}
+  html.pinned.fopen .deck{display:none}
+  html.pinned:not(.fopen) .bar a{display:none}
+  html.pinned .bar{flex-wrap:nowrap;gap:8px 14px}
+  html.pinned.fopen .bar{flex-wrap:wrap}
+  html.pinned .bar>*{white-space:nowrap}
+  html.pinned .ftog{display:inline-block;font:inherit;font-size:14px;font-weight:600;color:#FFFFFF;background:var(--fg);border:0;border-radius:2px;padding:7px 12px;cursor:pointer;order:-1}
+  html.pinned .bar{padding:8px 0}
+  html.pinned .nav{margin:10px 0 8px}
+  html.pinned .nav .hint{font-size:13px;padding:8px 12px 7px}
+  html.pinned .nav button{width:40px;height:40px;font-size:19px}
+  html.pinned .prog{margin-bottom:10px}
+  html.pinned .yr{font-size:18px;padding:6px 12px 5px;margin-bottom:8px}
+  html.pinned .e{padding:14px 15px 12px}
+  html.pinned .t{font-size:18px}
+  html.pinned .b{font-size:14px;margin-bottom:8px}
+  html.pinned .foot{font-size:10.5px;line-height:1.35}
+  html.pinned .skip{font-size:13px;padding:8px 12px 7px}
+  html.pinned .footrow{flex-wrap:wrap;gap:6px}
+  html.pinned .skip{order:-1}
+}
+@media (max-width:420px){.controls{grid-template-columns:1fr}.e{width:78vw}.wrap{padding:28px 16px 20px}.nav .hint{font-size:14px;padding:9px 14px 8px}.nav button{width:44px;height:44px}.sw::after{width:48px}}
+.full{display:none;align-items:center;gap:10px;background:var(--red);color:#FFFFFF;text-decoration:none;font-family:'Oswald','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:16px;line-height:1;padding:12px 20px 11px;border-radius:999px;white-space:nowrap;transition:background .2s}
+.full i{font-style:normal;font-family:'Work Sans',Arial,sans-serif;font-size:18px}
+.full:hover{background:#202B29}
+.head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}
+html.withfull .full{display:inline-flex}
+@media (max-width:820px){html.withfull .head{margin-bottom:16px}}
+@media (max-width:640px){html.withfull .full{font-size:14px;padding:10px 16px 9px}}
+</style></head><body>
+<div class="wrap">
+<div class="head"><div><h2>Search the record</h2>
+<p class="deck">All 34 reversals, 1998–2026, with primary sources.</p></div><a class="full" href="../../" target="_blank" rel="noopener">See the full story <i aria-hidden="true">→</i></a></div>
+<div class="controls" role="search">
+  <label>Keyword<input id="q" type="search" placeholder="Try: Kake, Laporte, 2008, Fed. Reg." autocomplete="off"></label>
+  <label>Type of action<select id="typ"><option value="">All types</option><option>Court ruling</option><option>Agency rule</option><option>Executive action</option><option>State-specific rule</option><option>Lawsuit or settlement</option></select></label>
+  <label>Where<select id="pl"><option value="">All places</option><option>Nationwide</option><option>Tongass (Alaska)</option><option>Idaho</option><option>Colorado</option><option>Virginia, N.C., S.C.</option></select></label>
+  <label>Administration<select id="adm"><option value="">All administrations</option><option>Clinton</option><option>Bush</option><option>Obama</option><option>Trump (first term)</option><option>Biden</option><option>Trump (second term)</option></select></label>
+</div>
+<div class="bar"><button type="button" class="ftog" id="ftog" aria-expanded="false">Search &amp; filter</button><span class="count" id="n" aria-live="polite">34 of 34 reversals</span><button type="button" id="clr">Clear</button><a href="roadless-timeline.csv" download="roadless-timeline.csv">Download all (CSV)</a></div>
+<div class="nav"><span class="hint"><span class="hl">Hover here and scroll sideways</span> <i aria-hidden="true">→</i></span><button type="button" id="prev" aria-label="Earlier">←</button><button type="button" id="next" aria-label="Later">→</button></div>
+<div class="prog" aria-hidden="true"><i id="pg"></i></div>
+<div class="sw" id="sw"><div class="strip" id="strip" tabindex="0" aria-label="Reversals, oldest to newest. Scroll sideways to see more."></div></div>
+<div class="footrow"><p class="foot">Descriptions adapted from Earthjustice’s “Timeline of the Roadless Rule,” checked against the primary sources linked in each entry. As of Oct. 2026.</p><button type="button" class="skip" id="skip">Skip to where it stands <i aria-hidden="true">↓</i></button></div>
+</div>
+<script>
+var D=[{"d": "1998-01-28", "y": "1998", "lab": "January 1998", "t": "Moratorium proposed", "b": "The U.S. Forest Service Chief announces plans to develop a transportation policy for the National Forest System. He also proposes an 18-month road building moratorium on 130 National Forests while the policy is developed.", "typ": "Executive action", "pl": "Nationwide", "adm": "Clinton", "area": "Nationwide (130 national forests)", "src": [["63 Fed. Reg. 4,350–4,351 (Jan. 28, 1998)", "https://www.govinfo.gov/content/pkg/FR-1998-01-28/pdf/98-1907.pdf"], ["63 Fed. Reg. 4,351–4,354 (Jan. 28, 1998)", "https://www.govinfo.gov/content/pkg/FR-1998-01-28/pdf/98-1906.pdf"]]}, {"d": "1999-03-01", "y": "1999", "lab": "March 1, 1999", "t": "Moratorium takes effect", "b": "A temporary roadbuilding moratorium takes effect.", "typ": "Agency rule", "pl": "Nationwide", "adm": "Clinton", "area": "Nationwide (Tongass exempted)", "src": [["64 Fed. Reg. 7,290–7,305 (Feb. 12, 1999) (effective Mar. 1, 1999)", "https://www.govinfo.gov/content/pkg/FR-1999-02-12/pdf/99-3103.pdf"]]}, {"d": "2001-01-12", "y": "2001", "lab": "January 2001", "t": "Roadless Rule published", "b": "The USDA publishes the Roadless Area Conservation Rule, generally prohibiting road construction, road reconstruction, and timber harvesting on 58.5 million acres of undeveloped national forest lands, subject to exceptions.", "typ": "Agency rule", "pl": "Nationwide", "adm": "Clinton", "area": "Nationwide, including the Tongass", "src": [["66 Fed. Reg. 3,244, 3,245, 3,272–3,273 (Jan. 12, 2001)", "https://www.govinfo.gov/content/pkg/FR-2001-01-12/pdf/01-726.pdf"]]}, {"d": "2001-02-05", "y": "2001", "lab": "February 5, 2001", "t": "Rule delayed", "b": "In accordance with President Bush's Regulatory Review Plan, the Roadless Rule is delayed for an additional 60 calendar days.", "typ": "Executive action", "pl": "Nationwide", "adm": "Bush", "area": "Nationwide", "src": [["66 Fed. Reg. 8,899 (Feb. 5, 2001)", "https://www.govinfo.gov/content/pkg/FR-2001-02-05/pdf/01-2870.pdf"]]}, {"d": "2001-05-10", "y": "2001", "lab": "May 10, 2001", "t": "Idaho court blocks the rule", "b": "Idaho Federal Judge Edward Lodge issues a preliminary injunction barring the Roadless Rule from taking effect.", "typ": "Court ruling", "pl": "Nationwide", "adm": "Bush", "area": "Nationwide", "src": [["Kootenai Tribe of Idaho v. Veneman, No. CV01-10-N-EJL, 2001 WL 1141275, at *2 (D. Idaho May 10, 2001)", "https://www.elr.info/litigation/kootenai-tribe-idaho-v-veneman"]]}, {"d": "2002-12-12", "y": "2002", "lab": "December 12, 2002", "t": "Ninth Circuit reinstates the rule", "b": "The Ninth Circuit Court of Appeals reverses Judge Lodge’s preliminary injunction, reinstating the Roadless Rule.", "typ": "Court ruling", "pl": "Nationwide", "adm": "Bush", "area": "Nationwide", "src": [["Kootenai Tribe of Idaho v. Veneman, 313 F.3d 1094, 1126 (9th Cir. 2002)", "https://law.justia.com/cases/federal/appellate-courts/F3/313/1094/533308/"]]}, {"d": "2003-06-09", "y": "2003", "lab": "June 9, 2003", "t": "Alaska settlement", "b": "The Bush Administration announces it will settle a lawsuit brought by the State of Alaska by agreeing to propose a temporary exemption for the Tongass National Forest. Separately, it announces it will consider whether the Tongass and Chugach National Forests should be exempted from the Roadless Rule.", "typ": "Lawsuit or settlement", "pl": "Tongass (Alaska)", "adm": "Bush", "area": "Tongass and Chugach National Forests, Alaska", "src": [["U.S. Dep't of Agric., Release No. 0200.03 (June 9, 2003)", "https://www.fs.usda.gov/sites/default/files/roadless/roadless-news-release-20030609-stelprdb5050590.pdf"], ["see also 68 Fed. Reg. 75,136, 75,136–75,137 (Dec. 30, 2003)", "https://www.govinfo.gov/content/pkg/FR-2003-12-30/pdf/03-32077.pdf"]]}, {"d": "2003-07-14", "y": "2003", "lab": "July 14, 2003", "t": "Wyoming court strikes the rule", "b": "Wyoming Federal Court Judge Clarence Brimmer finds the Roadless Rule illegal and issues an injunction barring it from taking effect.", "typ": "Court ruling", "pl": "Nationwide", "adm": "Bush", "area": "Nationwide", "src": [["Wyoming v. U.S. Dep't of Agric., 277 F. Supp. 2d 1197, 1239 (D. Wyo. 2003)", "https://law.justia.com/cases/federal/district-courts/FSupp2/277/1197/2564555/"]]}, {"d": "2003-12-30", "y": "2003", "lab": "December 30, 2003", "t": "Tongass temporarily exempted", "b": "USDA publishes a final rule temporarily exempting the Tongass National Forest from the Roadless Rule.", "typ": "Agency rule", "pl": "Tongass (Alaska)", "adm": "Bush", "area": "Tongass National Forest, Alaska", "src": [["68 Fed. Reg. 75,136–75,146 (Dec. 30, 2003)", "https://www.govinfo.gov/content/pkg/FR-2003-12-30/pdf/03-32077.pdf"]]}, {"d": "2004-01-29", "y": "2004", "lab": "January 29, 2004", "t": "Tongass exemption takes effect", "b": "The Tongass exemption takes effect.", "typ": "Agency rule", "pl": "Tongass (Alaska)", "adm": "Bush", "area": "Tongass National Forest, Alaska", "src": [["68 Fed. Reg. 75,136 (Dec. 30, 2003) (effective Jan. 29, 2004)", "https://www.govinfo.gov/content/pkg/FR-2003-12-30/pdf/03-32077.pdf"]]}, {"d": "2005-05-05", "y": "2005", "lab": "May 5, 2005", "t": "State Petitions Rule", "b": "The Bush Administration announces the State Petitions Rule as a substitute for the Roadless Rule, allowing governors to petition for state-specific management requirements.", "typ": "Agency rule", "pl": "Nationwide", "adm": "Bush", "area": "Nationwide", "src": [["70 Fed. Reg. 25,654–25,662 (May 13, 2005) (signed May 5, 2005)", "https://www.govinfo.gov/content/pkg/FR-2005-05-13/pdf/05-9349.pdf"]]}, {"d": "2006-06-21", "y": "2006", "lab": "June 21, 2006", "t": "Eastern state petitions approved", "b": "The Bush Administration approves petitions from the governors of three Eastern states—Virginia, North Carolina, and South Carolina—concerning state-specific roadless protections for roughly 555,000 acres of forested land within their borders.", "typ": "State-specific rule", "pl": "Virginia, N.C., S.C.", "adm": "Bush", "area": "Virginia, North Carolina and South Carolina (about 555,000 acres)", "src": [["Pamela Baldwin & Ross Gorte, Cong. Rsch. Serv., RL30647, The National Forest System Roadless Areas Initiative 31 & nn.122–123 (updated Sept. 7, 2006)", "https://www.everycrsreport.com/files/20060907_RL30647_65a38c4ee8b65c3c9574e3474192542f5048da46.pdf"]]}, {"d": "2006-09-20", "y": "2006", "lab": "September 20, 2006", "t": "Court reinstates the Roadless Rule", "b": "Federal District Court Judge Elizabeth Laporte in San Francisco orders reinstatement of the Clinton-era Roadless Rule for almost 50 million acres of national forests and grasslands, generally restricting road construction, road reconstruction, and timber harvesting, subject to exceptions.", "typ": "Court ruling", "pl": "Nationwide", "adm": "Bush", "area": "Nationwide (about 50 million acres)", "src": [["California ex rel. Lockyer v. U.S. Dep't of Agric., No. C05-03508 EDL (N.D. Cal. Sept. 20, 2006), amended, 459 F. Supp. 2d 874, 919 (N.D. Cal. Oct. 11, 2006)", "https://www.fs.usda.gov/sites/default/files/roadless/roadless-judge-laporte-20061011-decision-stelprdb5053130.pdf"]]}, {"d": "2007-02-06", "y": "2007", "lab": "February 6, 2007", "t": "Final injunction issued", "b": "Judge Laporte issues a final injunction, clarifying its application to certain post-May 2005 oil-and-gas authorizations.", "typ": "Court ruling", "pl": "Nationwide", "adm": "Bush", "area": "Nationwide (oil and gas authorizations)", "src": [["California ex rel. Lockyer v. U.S. Dep't of Agric., Nos. C05-03508 EDL & C05-04038 EDL, Final Injunction Order, Dkt. 235, at 2–3 (N.D. Cal. Feb. 6, 2007)", "https://omb.report/icr/200802-0596-002/doc/6320601"]]}, {"d": "2008-08-12", "y": "2008", "lab": "August 12, 2008", "t": "Wyoming court strikes the rule again", "b": "Wyoming Federal District Court Judge Brimmer issues a second decision, very similar to his 2003 decision, invalidating and enjoining the Roadless Rule nationwide.", "typ": "Court ruling", "pl": "Nationwide", "adm": "Bush", "area": "Nationwide", "src": [["Wyoming v. U.S. Dep't of Agric., 570 F. Supp. 2d 1309, 1354–1355 (D. Wyo. 2008)", "https://law.justia.com/cases/federal/district-courts/FSupp2/570/1309/1432887/"]]}, {"d": "2008-10-16", "y": "2008", "lab": "October 16, 2008", "t": "Idaho Roadless Rule adopted", "b": "The Forest Service adopts the Idaho Roadless Rule.", "typ": "State-specific rule", "pl": "Idaho", "adm": "Bush", "area": "Idaho", "src": [["73 Fed. Reg. 61,456–61,496 (Oct. 16, 2008)", "https://www.govinfo.gov/content/pkg/FR-2008-10-16/pdf/E8-24285.pdf"]]}, {"d": "2008-12-02", "y": "2008", "lab": "December 2, 2008", "t": "Injunction narrowed", "b": "Judge Laporte partially stays her injunction, limiting geographic scope to the Ninth Circuit and New Mexico.", "typ": "Court ruling", "pl": "Nationwide", "adm": "Bush", "area": "Ninth Circuit states and New Mexico", "src": [["California ex rel. Lockyer v. U.S. Dep't of Agric., Nos. C05-03508 EDL & C05-04038 EDL, Order Partially Staying Injunctive Relief, Dkt. 283 (N.D. Cal. Dec. 2, 2008)", "https://cases.justia.com/federal/district-courts/california/candce/3%3A2005cv03508/34181/283/0.pdf"]]}, {"d": "2008-12-05", "y": "2008", "lab": "December 5, 2008", "t": "Colorado rule postponed", "b": "Colorado and Administration officials agree to postpone action on the proposed Colorado Roadless Rule until spring 2009.", "typ": "State-specific rule", "pl": "Colorado", "adm": "Bush", "area": "Colorado", "src": [["Colorado Secures Delay in Implementation of Roadless Management Plan, Am. Whitewater (Dec. 5, 2008)", "https://www.americanwhitewater.org/article/30224/"]]}, {"d": "2009-08-05", "y": "2009", "lab": "August 5, 2009", "t": "Ninth Circuit upholds the rule", "b": "The Ninth Circuit Court of Appeals upholds Roadless Rule restrictions affecting over 40 million acres of national forests and grasslands, generally limiting road construction, road reconstruction, and timber harvesting.", "typ": "Court ruling", "pl": "Nationwide", "adm": "Obama", "area": "Ninth Circuit states and New Mexico", "src": [["California ex rel. Lockyer v. U.S. Dep't of Agric., 575 F.3d 999, 1021 (9th Cir. 2009)", "https://www.govinfo.gov/content/pkg/USCOURTS-ca9-07-15613/pdf/USCOURTS-ca9-07-15613-0.pdf"]]}, {"d": "2010-05-28", "y": "2010", "lab": "May 28, 2010", "t": "Secretary review extended", "b": "The Obama Administration extends for another year a requirement that certain road construction, road reconstruction, and timber cutting or removal decisions in inventoried roadless areas be reserved to the Secretary of Agriculture.", "typ": "Executive action", "pl": "Nationwide", "adm": "Obama", "area": "Nationwide, except Idaho", "src": [["U.S. Dep't of Agric., Secretary's Memorandum 1042-155 (May 28, 2010), cited in Kristina Alexander & Ross W. Gorte, Cong. Rsch. Serv., RL30647, National Forest System (NFS) Roadless Area Initiatives 18 n.97 (Apr. 18, 2011)", "https://www.everycrsreport.com/files/20110418_RL30647_ddeaae5c5bb236cc4cbdd4d26426bbd1c1bd86aa.pdf"]]}, {"d": "2011-01-29", "y": "2011", "lab": "January 29, 2011", "t": "Idaho rule upheld", "b": "Idaho District Court upholds the Idaho Roadless Rule.", "typ": "Court ruling", "pl": "Idaho", "adm": "Obama", "area": "Idaho", "src": [["Jayne v. Rey, 780 F. Supp. 2d 1099 (D. Idaho 2011)", "https://law.justia.com/cases/federal/district-courts/idaho/iddce/4%3A2009cv00015/23497/121/"]]}, {"d": "2011-03-04", "y": "2011", "lab": "March 4, 2011", "t": "Tongass exemption vacated", "b": "Alaska District Court vacates the 2003 Tongass exemption and reinstates the Roadless Rule on the Tongass.", "typ": "Court ruling", "pl": "Tongass (Alaska)", "adm": "Obama", "area": "Tongass National Forest, Alaska", "src": [["Organized Village of Kake v. U.S. Dep't of Agric., 776 F. Supp. 2d 960, 976–977 (D. Alaska 2011)", "https://www.fs.usda.gov/sites/default/files/roadless-court-order-and-opinion-stelprdb5385396.pdf"]]}, {"d": "2011-10-21", "y": "2011", "lab": "October 21, 2011", "t": "Tenth Circuit upholds the rule", "b": "The Tenth Circuit Court of Appeals reverses the Wyoming District Court and directs that the prior injunction be vacated.", "typ": "Court ruling", "pl": "Nationwide", "adm": "Obama", "area": "Nationwide", "src": [["Wyoming v. U.S. Dep't of Agric., 661 F.3d 1209, 1272 (10th Cir. 2011)", "https://law.justia.com/cases/federal/appellate-courts/ca10/09-8075/09-8075-2011-10-21.html"]]}, {"d": "2012-07-03", "y": "2012", "lab": "July 3, 2012", "t": "Colorado Roadless Rule adopted", "b": "The Forest Service adopts the Colorado Roadless Rule.", "typ": "State-specific rule", "pl": "Colorado", "adm": "Obama", "area": "Colorado", "src": [["U.S. Forest Serv., Colorado Roadless Rule", "https://www.fs.usda.gov/r02/natural-resources/forest-management/colorado-roadless-rule"]]}, {"d": "2014-03-26", "y": "2014", "lab": "March 26, 2014", "t": "Tongass exemption revived", "b": "A divided panel of the Ninth Circuit Court of Appeals reverses the 2011 Alaska District Court decision by a 2–1 split vote, reviving the Tongass exemption.", "typ": "Court ruling", "pl": "Tongass (Alaska)", "adm": "Obama", "area": "Tongass National Forest, Alaska", "src": [["Organized Village of Kake v. U.S. Dep't of Agric., 746 F.3d 970 (9th Cir. 2014)", "https://law.justia.com/cases/federal/appellate-courts/ca9/11-35517/11-35517-2014-03-26.html"]]}, {"d": "2014-08-29", "y": "2014", "lab": "August 29, 2014", "t": "Rehearing en banc granted", "b": "The U.S. Court of Appeals for the Ninth Circuit announces it will re-hear the case challenging the Tongass exemption. The court grants the rehearing en banc, rendering the earlier opinion ineffective.", "typ": "Court ruling", "pl": "Tongass (Alaska)", "adm": "Obama", "area": "Tongass National Forest, Alaska", "src": [["Organized Village of Kake v. U.S. Dep't of Agric., 765 F.3d 1117 (9th Cir. 2014)", "https://law.justia.com/cases/federal/appellate-courts/ca9/11-35517/11-35517-2014-08-29.html"]]}, {"d": "2015-07-29", "y": "2015", "lab": "July 29, 2015", "t": "Tongass exemption struck down", "b": "The Ninth Circuit's 11-judge en banc panel rules that the exemption of the Tongass from the Roadless Rule was invalid under the Administrative Procedure Act.", "typ": "Court ruling", "pl": "Tongass (Alaska)", "adm": "Obama", "area": "Tongass National Forest, Alaska", "src": [["Organized Village of Kake v. U.S. Dep't of Agric., 795 F.3d 956, 966–970 (9th Cir. 2015) (en banc)", "https://cdn.ca9.uscourts.gov/datastore/opinions/2015/07/29/11-35517.pdf"]]}, {"d": "2018-08-02", "y": "2018", "lab": "August 2, 2018", "t": "Alaska rulemaking begins", "b": "Alaska and the Forest Service enter an agreement as cooperating agencies for an Alaska roadless rulemaking after Alaska petitioned for a Tongass exemption.", "typ": "State-specific rule", "pl": "Tongass (Alaska)", "adm": "Trump (first term)", "area": "Tongass National Forest, Alaska", "src": [["Memorandum of Understanding Between the State of Alaska and USDA Forest Service (Aug. 2, 2018)", "https://forestry.alaska.gov/Assets/pdfs/whats_new/MOU%20USFS%20AK%20State%20Roadless.pdf"]]}, {"d": "2020-10-29", "y": "2020", "lab": "October 29, 2020", "t": "Tongass exemption finalized", "b": "The Trump Administration publishes a final rule exempting the Tongass National Forest from the Roadless Rule.", "typ": "Agency rule", "pl": "Tongass (Alaska)", "adm": "Trump (first term)", "area": "Tongass National Forest, Alaska", "src": [["85 Fed. Reg. 68,688–68,703 (Oct. 29, 2020)", "https://www.govinfo.gov/content/pkg/FR-2020-10-29/pdf/2020-23984.pdf"]]}, {"d": "2023-01-27", "y": "2023", "lab": "January 27, 2023", "t": "Tongass protections restored", "b": "The U.S. Forest Service formally reinstates the 2001 Roadless Rule management regime across the Tongass National Forest, reimposing restrictions on road construction, road reconstruction, and timber harvesting, subject to exceptions, across about 9.37 million acres of land.", "typ": "Agency rule", "pl": "Tongass (Alaska)", "adm": "Biden", "area": "Tongass National Forest, Alaska (about 9.37 million acres)", "src": [["88 Fed. Reg. 5,252–5,272 (Jan. 27, 2023)", "https://www.govinfo.gov/content/pkg/FR-2023-01-27/pdf/2023-01483.pdf"]]}, {"d": "2023-09-08", "y": "2023", "lab": "September 8, 2023", "t": "Utilities sue USDA", "b": "Represented by Pacific Legal Foundation, Inside Passage Electric Cooperative and Alaska Power Association file suit against USDA after the agency’s January 2023 decision reinstating the 2001 Roadless Rule on the Tongass National Forest. The USDA lacked statutory authority to reimpose the rule, and the restrictions impede hydroelectric, geothermal, and other infrastructure projects that require road access.", "typ": "Lawsuit or settlement", "pl": "Tongass (Alaska)", "adm": "Biden", "area": "Tongass National Forest, Alaska", "src": [["Complaint, Inside Passage Elec. Coop. v. U.S. Dep't of Agric., No. 3:23-cv-00204-SLG (D. Alaska Sept. 8, 2023)", "https://pacificlegal.org/wp-content/uploads/2023/09/2023-09-08-Inside-Passage-v-USDA-complaint.pdf"]]}, {"d": "2025-01-20", "y": "2025", "lab": "January 20, 2025", "t": "Executive order on the Tongass", "b": "On his first day in office, President Trump signs an executive order directing the Secretary of Agriculture to reinstate the 2020 Alaska Roadless Rule’s exemption for the Tongass.", "typ": "Executive action", "pl": "Tongass (Alaska)", "adm": "Trump (second term)", "area": "Tongass National Forest, Alaska", "src": [["Exec. Order No. 14,153, § 3(c), 90 Fed. Reg. 8,347, 8,350 (Jan. 29, 2025) (signed Jan. 20, 2025)", "https://www.govinfo.gov/content/pkg/FR-2025-01-29/pdf/2025-01955.pdf"]]}, {"d": "2025-06-23", "y": "2025", "lab": "June 23, 2025", "t": "Rescission announced", "b": "Agriculture Secretary Rollins announces USDA’s intention to rescind the 2001 Roadless Rule, and USDA begins the formal rulemaking process.", "typ": "Agency rule", "pl": "Nationwide", "adm": "Trump (second term)", "area": "Nationwide (Idaho and Colorado keep their own rules)", "src": [["U.S. Dep't of Agric., Secretary Rollins Rescinds Roadless Rule, Eliminating Impediment to Responsible Forest Management (June 23, 2025)", "https://content.govdelivery.com/accounts/USDAOC/bulletins/3e649a2"], ["see also 90 Fed. Reg. 42,179 (Aug. 29, 2025)", "https://www.federalregister.gov/d/2025-16581"]]}, {"d": "2026-08-20", "y": "2026", "lab": "August 20, 2026", "t": "Rescission proposed", "b": "The U.S. Forest Service publishes a proposed rule and environmental review for rescinding the Roadless Rule.", "typ": "Agency rule", "pl": "Nationwide", "adm": "Trump (second term)", "area": "Nationwide (Idaho and Colorado keep their own rules)", "src": [["91 Fed. Reg. 53,827–53,832 (Aug. 20, 2026)", "https://www.govinfo.gov/content/pkg/FR-2026-08-20/pdf/2026-16965.pdf"], ["see also 91 Fed. Reg. 57,841 (Sept. 11, 2026) (extending comment period)", "https://www.federalregister.gov/d/2026-18648"]]}];
+(function(){
+  var q=document.getElementById('q'),ty=document.getElementById('typ'),pl=document.getElementById('pl'),ad=document.getElementById('adm'),
+      strip=document.getElementById('strip'),sw=document.getElementById('sw'),n=document.getElementById('n'),pg=document.getElementById('pg'),prev=document.getElementById('prev'),next=document.getElementById('next');
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function hl(s,terms){s=esc(s);terms.forEach(function(t){var re=new RegExp('('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');s=s.replace(re,'<mark>$1</mark>')});return s}
+  function cite(e){return e.src.map(function(s){return s[0]}).join('; ')}
+  D.forEach(function(e){e.h=[e.lab,e.d,e.t,e.b,e.typ,e.pl,e.area,e.adm,cite(e)].join(' ').toLowerCase()});
+  function render(){
+    var terms=q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var r=D.filter(function(e){return(!ty.value||e.typ===ty.value)&&(!pl.value||e.pl===pl.value)&&(!ad.value||e.adm===ad.value)&&terms.every(function(t){return e.h.indexOf(t)>-1})});
+    n.textContent=r.length+' of '+D.length+' reversals';
+    if(!r.length){strip.innerHTML='<p class="none">No entries match. Try fewer words, or clear the filters.</p>';strip.scrollLeft=0;upd();report(true);return}
+    var out='',y=null;
+    r.forEach(function(e){
+      if(e.y!==y){if(y!==null)out+='</div></div>';y=e.y;out+='<div class="yg"><div class="yr"><span>'+y+'</span></div><div class="cards">'}
+      var links=e.src.map(function(s){return '<a href="'+esc(s[1])+'" target="_blank" rel="noopener">'+hl(s[0],terms)+'</a>'}).join('; ');
+      out+='<article class="e"><p class="dt">'+hl(e.lab,terms)+'</p><h3 class="t">'+hl(e.t,terms)+'</h3><p class="b">'+hl(e.b,terms)+'</p>'+
+        '<p class="meta">'+esc(e.typ)+' · '+hl(e.area,terms)+'</p><div class="src">Source: '+links+
+        '<br><button type="button" class="cp" data-i="'+D.indexOf(e)+'">Copy citation</button></div></article>';
+    });
+    out+='</div></div>';strip.innerHTML=out;tgt=null;strip.scrollLeft=0;upd();report(true);
+  }
+  function upd(){var m=strip.scrollWidth-strip.clientWidth;sw.classList.toggle('end',strip.scrollLeft>=m-2);pg.style.width=(m>0?strip.scrollLeft/m*100:100)+'%';prev.disabled=strip.scrollLeft<=2;next.disabled=strip.scrollLeft>=m-2}
+  strip.addEventListener('scroll',upd,{passive:true});
+  // While the pointer is over the strip, the mouse wheel scrolls it sideways, eased frame by frame
+  // so a wheel notch glides instead of jumping. At either end the wheel goes back to scrolling the page.
+  var tgt=null,anim=false;
+  function maxL(){return strip.scrollWidth-strip.clientWidth}
+  function glide(){
+    if(tgt===null){anim=false;return}
+    var c=strip.scrollLeft,d=tgt-c;
+    if(Math.abs(d)<0.6){strip.scrollLeft=tgt;tgt=null;anim=false;return}
+    strip.scrollLeft=c+d*0.18;requestAnimationFrame(glide);
+  }
+  function go(to){tgt=Math.max(0,Math.min(maxL(),to));if(!anim){anim=true;requestAnimationFrame(glide)}}
+  strip.addEventListener('wheel',function(e){
+    if(pinned){
+      // Pinned: up/down scrolling passes through to the page (which moves the cards);
+      // a sideways trackpad swipe is turned into page scrolling too.
+      if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){e.preventDefault();toParent({plf:'forest-scroll',dy:e.deltaX*(e.deltaMode===1?32:1)})}
+      return;
+    }
+    if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){tgt=null;return}
+    var card=e.target.closest&&e.target.closest('.e');
+    if(card&&card.scrollHeight>card.clientHeight+2){var dy=e.deltaY;if((dy>0&&card.scrollTop+card.clientHeight<card.scrollHeight-1)||(dy<0&&card.scrollTop>0))return}
+    var m=maxL(),d=e.deltaY*(e.deltaMode===1?32:e.deltaMode===2?strip.clientWidth:1),base=tgt===null?strip.scrollLeft:tgt;
+    if((d<0&&base<=0.5)||(d>0&&base>=m-0.5))return;
+    e.preventDefault();go(base+d);
+  },{passive:false});
+  ['pointerdown','touchstart'].forEach(function(t){strip.addEventListener(t,function(){tgt=null},{passive:true})});
+  function step(dir){var w=(strip.querySelector('.e')||{offsetWidth:300}).offsetWidth+12,d=dir*Math.max(w,strip.clientWidth*.8);
+    if(pinned){toParent({plf:'forest-scroll',dy:d,smooth:true});return}
+    go((tgt===null?strip.scrollLeft:tgt)+d)}
+  prev.addEventListener('click',function(){step(-1)});next.addEventListener('click',function(){step(1)});
+  strip.addEventListener('click',function(ev){
+    var b=ev.target.closest('.cp');if(!b)return;var e=D[+b.dataset.i];
+    var txt=e.lab+'. '+e.t+'. '+cite(e)+'. '+e.src.map(function(s){return s[1]}).join(' ');
+    function done(ok){b.textContent=ok?'Copied':'Select and copy';setTimeout(function(){b.textContent='Copy citation'},1600)}
+    function fb(){var t=document.createElement('textarea');t.value=txt;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();var ok=false;try{ok=document.execCommand('copy')}catch(x){}document.body.removeChild(t);done(ok)}
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(function(){done(true)},fb);else fb();
+  });
+  [q,ty,pl,ad].forEach(function(el){el.addEventListener('input',render);el.addEventListener('change',render)});
+  document.getElementById('clr').addEventListener('click',function(){q.value='';ty.value='';pl.value='';ad.value='';render();q.focus()});
+  var touch=window.matchMedia&&matchMedia('(hover: none)').matches,hint=document.querySelector('.hint .hl');
+  if(touch)hint.textContent='Swipe sideways';
+  document.getElementById('skip').addEventListener('click',function(){toParent({plf:'forest-skip'})});
+  var ft=document.getElementById('ftog');
+  ft.addEventListener('click',function(){var o=document.documentElement.classList.toggle('fopen');ft.setAttribute('aria-expanded',o?'true':'false');ft.textContent=o?'Hide filters':'Search & filter';report(false)});
+
+  // ---- Pinned mode: inside the scrollytelling page, the page's Head code pins this frame to the
+  // top of the screen and tells it how far the reader has scrolled; that distance moves the cards.
+  var pinned=false,heard=false,inFrame=false,lastLen=-1;
+  try{inFrame=window.self!==window.top}catch(x){inFrame=true}
+  function toParent(m){try{parent.postMessage(m,'*')}catch(x){}}
+  function report(reset){if(!inFrame||!pinned||!heard)return;var L=Math.max(0,maxL());
+    if(reset||Math.abs(L-lastLen)>1){lastLen=L;toParent({plf:'forest-size',len:L,reset:!!reset})}}
+  if(inFrame){
+    pinned=true;document.documentElement.classList.add('pinned');
+    hint.textContent=touch?'Swipe up to see more':'Scroll down to move through the years';
+    var hello=function(){if(!heard){lastLen=Math.max(0,maxL());toParent({plf:'forest-hello',len:lastLen})}};
+    window.addEventListener('message',function(e){var d=e.data;if(!d||d.plf!=='forest'||typeof d.p!=='number')return;
+      if(!heard){heard=true;document.documentElement.classList.add('heard');report(false)}
+      if(!pinned)return;go(d.p*maxL())});
+    render();hello();var hi=setInterval(function(){if(heard){clearInterval(hi);return}hello()},600);
+    // No Head code on the page: go back to the stand-alone layout (scroll sideways while hovering)
+    setTimeout(function(){if(heard)return;clearInterval(hi);pinned=false;document.documentElement.classList.remove('pinned');
+      hint.textContent=touch?'Swipe sideways':'Hover here and scroll sideways';upd()},1500);
+    // Sideways swipes on a phone move the page, and so the cards
+    var t0x=null,t0y=null;
+    strip.addEventListener('touchstart',function(e){if(!pinned)return;t0x=e.touches[0].clientX;t0y=e.touches[0].clientY},{passive:true});
+    strip.addEventListener('touchmove',function(e){if(!pinned||t0x===null)return;var x=e.touches[0].clientX,y=e.touches[0].clientY,dx=x-t0x,dy=y-t0y;
+      if(Math.abs(dx)>Math.abs(dy)){toParent({plf:'forest-scroll',dy:-dx*1.4});t0x=x;t0y=y}},{passive:true});
+    strip.addEventListener('touchend',function(){t0x=null},{passive:true});
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){upd();report(false)});
+  }else{render()}
+  window.addEventListener('resize',function(){upd();report(false)});
+})();
+</script>
+</body></html>
