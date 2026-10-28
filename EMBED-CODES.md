@@ -1,6 +1,6 @@
 # A Forest of Reversals: embed codes
 
-Live site: https://plf-comms.github.io/forest-of-reversals/
+Live site: https://plf-comms.github.io/roadless-rule-timeline/
 
 Paste any of these into a Divi **Code** module (or a WordPress Custom HTML block).
 
@@ -17,7 +17,7 @@ Good for the case page. The button opens the full story in a new tab.
   @media (max-width:420px) { .forest-tl { height:1300px; } }
 </style>
 <iframe class="forest-tl"
-  src="https://plf-comms.github.io/forest-of-reversals/sections/05-search-the-record/index.html?full=1"
+  src="https://plf-comms.github.io/roadless-rule-timeline/sections/05-search-the-record/index.html?full=1"
   title="Search the record: Roadless Rule reversals, 1998–2026"
   loading="lazy"></iframe>
 ```
@@ -32,7 +32,7 @@ Same format as the old scrollytelling.ai embed. The story scrolls inside its own
 
 ```html
 <iframe
-  src="https://plf-comms.github.io/forest-of-reversals/"
+  src="https://plf-comms.github.io/roadless-rule-timeline/"
   title="A Forest of Reversals"
   style="width:100%;height:100vh;min-height:600px;border:0;display:block"
   loading="lazy" allowfullscreen></iframe>
@@ -42,9 +42,8 @@ Same format as the old scrollytelling.ai embed. The story scrolls inside its own
 
 ## Option C: The whole story, seamless (six sections plus a script)
 
-Scrolls with the page itself instead of inside a frame. Use the snippet in
-`forest-embed-snippet.html` and replace `BASE` with
-`https://plf-comms.github.io/forest-of-reversals`.
+Scrolls with the page itself instead of inside a frame. Paste the whole of
+`forest-embed-snippet.html`; the addresses are already filled in.
 
 ---
 
