@@ -13,7 +13,7 @@ sections/06-where-it-stands/ .......... Where it stands
 timeline/ ............................. full static timeline (was splendid-paprenjak)
 timeline/preview/ ..................... 960x1200 preview, now links to timeline/
 
-Hosted on GitHub Pages: https://plf-comms.github.io/roadless-rule-timeline/
+Hosted on GitHub Pages: https://plf-comms.github.io/Roadless-Rule-Timeline/
 Embed codes for WordPress/Divi: see EMBED-CODES.md
 
 To host anywhere else (any static host): upload this whole folder; index.html is the home page.

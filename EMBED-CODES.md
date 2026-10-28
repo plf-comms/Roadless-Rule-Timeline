@@ -1,6 +1,6 @@
 # A Forest of Reversals: embed codes
 
-Live site: https://plf-comms.github.io/roadless-rule-timeline/
+Live site: https://plf-comms.github.io/Roadless-Rule-Timeline/
 
 Paste any of these into a Divi **Code** module (or a WordPress Custom HTML block).
 
@@ -17,7 +17,7 @@ Good for the case page. The button opens the full story in a new tab.
   @media (max-width:420px) { .forest-tl { height:1300px; } }
 </style>
 <iframe class="forest-tl"
-  src="https://plf-comms.github.io/roadless-rule-timeline/sections/05-search-the-record/index.html?full=1"
+  src="https://plf-comms.github.io/Roadless-Rule-Timeline/sections/05-search-the-record/index.html?full=1"
   title="Search the record: Roadless Rule reversals, 1998–2026"
   loading="lazy"></iframe>
 ```
@@ -32,7 +32,7 @@ Same format as the old scrollytelling.ai embed. The story scrolls inside its own
 
 ```html
 <iframe
-  src="https://plf-comms.github.io/roadless-rule-timeline/"
+  src="https://plf-comms.github.io/Roadless-Rule-Timeline/"
   title="A Forest of Reversals"
   style="width:100%;height:100vh;min-height:600px;border:0;display:block"
   loading="lazy" allowfullscreen></iframe>
